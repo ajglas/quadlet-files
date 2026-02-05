@@ -1,6 +1,6 @@
 # Podman Quadlets 
 
-Systemd quadlets used with Podman and GVisor on Fedora CoreOS.
+Systemd quadlets used with Podman and gVisor on Fedora CoreOS.
 This repository contains most of my self-hosted services.
 
 ## Assumptions
