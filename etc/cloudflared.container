@@ -1,0 +1,29 @@
+[Unit]
+Description=Cloudflare Tunnel
+After=network-online.target
+Wants=network-online.target
+
+[Container]
+Image=docker.io/cloudflare/cloudflared:latest
+ContainerName=cloudflared
+AutoUpdate=registry
+
+Network=host
+
+PodmanArgs=--runtime=runc
+
+#User=200003
+#Group=200003
+
+Volume=/srv/cloudflared:/etc/cloudflared:Z
+Exec=tunnel run
+
+NoNewPrivileges=true
+DropCapability=ALL
+
+[Service]
+SuccessExitStatus=0 143
+Restart=always
+
+[Install]
+WantedBy=containers.target

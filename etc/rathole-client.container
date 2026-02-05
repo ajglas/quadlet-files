@@ -1,0 +1,21 @@
+[Unit]
+Description=Rathole Client (home)
+After=network-online.target
+Wants=network-online.target
+
+[Container]
+Image=docker.io/rapiz1/rathole:latest
+ContainerName=rathole-client
+AutoUpdate=registry
+#Network=host
+Volume=/srv/rathole/client.toml:/etc/rathole/client.toml:ro,Z
+Exec=/etc/rathole/client.toml
+
+PodmanArgs=--runtime=runc
+
+[Service]
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=containers.target
