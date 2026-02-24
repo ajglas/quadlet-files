@@ -1,0 +1,38 @@
+[Unit]
+Description=Gluetun
+After=network-online.target
+Wants=network-online.target
+
+[Container]
+Image=docker.io/qmcgaw/gluetun:v3
+ContainerName=gluetun
+AutoUpdate=registry
+
+AddCapability=NET_ADMIN
+AddCapability=NET_RAW
+
+AddDevice=/dev/net/tun
+
+PodmanArgs=--runtime=runc \
+  --sysctl net.ipv6.conf.all.disable_ipv6=1 \
+  --sysctl net.ipv6.conf.default.disable_ipv6=1 \
+  --sysctl net.ipv6.conf.lo.disable_ipv6=1
+
+EnvironmentFile=/srv/gluetun/gluetun.env
+
+PublishPort=6080:6080
+PublishPort=8080:8080
+
+[Service]
+Restart=always
+
+LockPersonality=true
+ProtectClock=true
+RestrictRealtime=true
+RuntimeDirectoryMode=700
+SystemCallArchitectures=native
+SystemCallFilter=~@obsolete
+
+[Install]
+WantedBy=containers.target
+
