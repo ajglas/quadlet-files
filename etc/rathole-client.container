@@ -7,7 +7,6 @@ Wants=network-online.target
 Image=docker.io/rapiz1/rathole:latest
 ContainerName=rathole-client
 AutoUpdate=registry
-#Network=host
 Volume=/srv/rathole/client.toml:/etc/rathole/client.toml:ro,Z
 Exec=/etc/rathole/client.toml
 
