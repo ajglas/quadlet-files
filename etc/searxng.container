@@ -1,0 +1,36 @@
+[Unit]
+Description=SearXNG
+Wants=network-online.target searxng-redis.service
+After=network-online.target searxng-redis.service
+
+[Container]
+Image=docker.io/searxng/searxng:latest
+ContainerName=searxng
+Network=searxng.network
+AutoUpdate=registry
+
+PublishPort=3034:8080/tcp
+
+Volume=/srv/searxng/config:/etc/searxng:Z
+
+User=200031
+Group=200031
+
+EnvironmentFile=/srv/searxng/searxng.env
+
+NoNewPrivileges=true
+DropCapability=all
+
+[Service]
+Restart=always
+TimeoutStartSec=90
+
+LockPersonality=true
+ProtectClock=true
+RestrictRealtime=true
+RuntimeDirectoryMode=700
+SystemCallArchitectures=native
+SystemCallFilter=~@obsolete
+
+[Install]
+WantedBy=containers.target
